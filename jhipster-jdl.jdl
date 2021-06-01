@@ -1,0 +1,97 @@
+
+application {
+  config {
+    baseName Pressing
+    applicationType monolithic
+    packageName com.store.pressing
+    prodDatabaseType mysql
+    devDatabaseType mysql
+    buildTool maven
+    authenticationType jwt
+    clientFramework angular
+    enableTranslation true
+    nativeLanguage fr
+    languages [fr, en]
+  }
+  entities *
+}
+
+enum Genre {
+    HOMME, DAME
+}
+enum Taille {
+    S, M, L, XL, XXL
+}
+enum StatusCommandeProduit {
+   PAYER, NONPAYER, RESTEAPAYER
+}
+enum StatusCategorie {
+    VALABLE, RESTREINT, DESACTIVER
+}
+
+
+/**
+ * The Client entity.
+ * @author Ndigue Sene
+ */
+entity Client {
+    /** fieldName */
+    telephone String
+}
+/**
+ * The Produit entity.
+ * @author Ndigue Sene
+ */
+entity Produit {
+    /** fieldName */
+    designation String required
+    prix Double required
+    codeProduit String
+    tailleProduit Taille required
+    image ImageBlob
+}
+
+/**
+ * The Categorie entity.
+ * @author Ndigue Sene
+ */
+entity Categorie {
+    /** fieldName */
+    designation String required
+    description String
+    status StatusCategorie
+}
+
+/**
+ * The CommandeProduit entity.
+ * @author Ndigue Sene
+ */
+entity CommandeProduit {
+    /** fieldName */
+    prixAvance Double
+    prixRestant Double
+    status StatusCommandeProduit
+    dateCommandeProduit LocalDate
+    dateLastModified LocalDate
+}
+
+relationship OneToOne {
+    Client{user(login) required} to User
+}
+/**
+ * Onr to Many relationship.
+ */
+relationship OneToMany {
+    Categorie{produit(designation)} to Produit{categorie}
+    Client{commandeProduit} to CommandeProduit
+}
+
+/**
+ * Many to Many relationship.
+ */
+relationship ManyToOne {
+    CommandeProduit{produit(codeProduit)} to Produit
+}
+
+service * with serviceClass
+paginate Produit, Client, Categorie with pagination

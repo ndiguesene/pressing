@@ -1,0 +1,33 @@
+{
+  "pressingApp": {
+    "commandeProduit": {
+      "home": {
+        "title": "CommandeProduits",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Commande Produit",
+        "createOrEditLabel": "Créer ou éditer un Commande Produit",
+        "notFound": "Aucun Commande Produit trouvé"
+      },
+      "created": "Un nouveau Commande Produit a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Commande Produit avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Commande Produit avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Commande Produit {{ id }} ?"
+      },
+      "detail": {
+        "title": "Commande Produit"
+      },
+      "id": "ID",
+      "prixAvance": "Prix Avance",
+      "prixRestant": "Prix Restant",
+      "status": "Status",
+      "dateCommandeProduit": "Date Commande Produit",
+      "dateLastModified": "Date Last Modified",
+      "produit": "Produit",
+      "client": "Client",
+      "help": {
+        "prixAvance": "fieldName"
+      }
+    }
+  }
+}

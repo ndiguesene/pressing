@@ -1,0 +1,40 @@
+{
+  "name": "Categorie",
+  "fields": [
+    {
+      "fieldName": "designation",
+      "fieldType": "String",
+      "javadoc": "fieldName",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "StatusCategorie",
+      "fieldValues": "VALABLE,RESTREINT,DESACTIVER"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "produit",
+      "otherEntityRelationshipName": "categorie",
+      "relationshipName": "produit",
+      "otherEntityField": "designation"
+    }
+  ],
+  "javadoc": "The Categorie entity.\\n@author Ndigue Sene",
+  "entityTableName": "categorie",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["Pressing"],
+  "changelogDate": "20210601231416"
+}

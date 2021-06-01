@@ -1,0 +1,50 @@
+{
+  "name": "Produit",
+  "fields": [
+    {
+      "fieldName": "designation",
+      "fieldType": "String",
+      "javadoc": "fieldName",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "prix",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "codeProduit",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "tailleProduit",
+      "fieldType": "Taille",
+      "fieldValues": "S,M,L,XL,XXL",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "image",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "categorie",
+      "otherEntityRelationshipName": "produit",
+      "relationshipName": "categorie"
+    }
+  ],
+  "javadoc": "The Produit entity.\\n@author Ndigue Sene",
+  "entityTableName": "produit",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["Pressing"],
+  "changelogDate": "20210601231316"
+}

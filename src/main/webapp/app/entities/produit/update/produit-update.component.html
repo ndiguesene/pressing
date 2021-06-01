@@ -1,0 +1,170 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-produit-heading" data-cy="ProduitCreateUpdateHeading" jhiTranslate="pressingApp.produit.home.createOrEditLabel">
+        Create or edit a Produit
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label
+            class="form-control-label"
+            jhiTranslate="pressingApp.produit.designation"
+            for="field_designation"
+            [ngbTooltip]="'pressingApp.produit.help.designation' | translate"
+            >Designation</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="designation"
+            id="field_designation"
+            data-cy="designation"
+            formControlName="designation"
+          />
+          <div *ngIf="editForm.get('designation')!.invalid && (editForm.get('designation')!.dirty || editForm.get('designation')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('designation')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="pressingApp.produit.prix" for="field_prix">Prix</label>
+          <input type="number" class="form-control" name="prix" id="field_prix" data-cy="prix" formControlName="prix" />
+          <div *ngIf="editForm.get('prix')!.invalid && (editForm.get('prix')!.dirty || editForm.get('prix')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('prix')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('prix')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="pressingApp.produit.codeProduit" for="field_codeProduit">Code Produit</label>
+          <input
+            type="text"
+            class="form-control"
+            name="codeProduit"
+            id="field_codeProduit"
+            data-cy="codeProduit"
+            formControlName="codeProduit"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="pressingApp.produit.tailleProduit" for="field_tailleProduit"
+            >Taille Produit</label
+          >
+          <select
+            class="form-control"
+            name="tailleProduit"
+            formControlName="tailleProduit"
+            id="field_tailleProduit"
+            data-cy="tailleProduit"
+          >
+            <option [ngValue]="null">{{ 'pressingApp.Taille.null' | translate }}</option>
+            <option value="S">{{ 'pressingApp.Taille.S' | translate }}</option>
+            <option value="M">{{ 'pressingApp.Taille.M' | translate }}</option>
+            <option value="L">{{ 'pressingApp.Taille.L' | translate }}</option>
+            <option value="XL">{{ 'pressingApp.Taille.XL' | translate }}</option>
+            <option value="XXL">{{ 'pressingApp.Taille.XXL' | translate }}</option>
+          </select>
+          <div
+            *ngIf="
+              editForm.get('tailleProduit')!.invalid && (editForm.get('tailleProduit')!.dirty || editForm.get('tailleProduit')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('tailleProduit')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="pressingApp.produit.image" for="field_image">Image</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('image')!.value"
+              alt="produit image"
+            />
+            <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
+              <span class="pull-left">{{ editForm.get('imageContentType')!.value }}, {{ byteSize(editForm.get('image')!.value) }}</span>
+              <button
+                type="button"
+                (click)="clearInputImage('image', 'imageContentType', 'file_image')"
+                class="btn btn-secondary btn-xs pull-right"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_image"
+              data-cy="image"
+              (change)="setFileData($event, 'image', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="image" id="field_image" data-cy="image" formControlName="image" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="imageContentType"
+            id="field_imageContentType"
+            formControlName="imageContentType"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="pressingApp.produit.categorie" for="field_categorie">Categorie</label>
+          <select class="form-control" id="field_categorie" data-cy="categorie" name="categorie" formControlName="categorie">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="categorieOption.id === editForm.get('categorie')!.value?.id ? editForm.get('categorie')!.value : categorieOption"
+              *ngFor="let categorieOption of categoriesSharedCollection; trackBy: trackCategorieById"
+            >
+              {{ categorieOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

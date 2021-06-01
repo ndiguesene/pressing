@@ -1,0 +1,66 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="commandeProduit">
+      <h2 data-cy="commandeProduitDetailsHeading"><span jhiTranslate="pressingApp.commandeProduit.detail.title">Commande Produit</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ commandeProduit.id }}</span>
+        </dd>
+        <dt>
+          <span
+            jhiTranslate="pressingApp.commandeProduit.prixAvance"
+            [ngbTooltip]="'pressingApp.commandeProduit.help.prixAvance' | translate"
+            >Prix Avance</span
+          >
+        </dt>
+        <dd>
+          <span>{{ commandeProduit.prixAvance }}</span>
+        </dd>
+        <dt><span jhiTranslate="pressingApp.commandeProduit.prixRestant">Prix Restant</span></dt>
+        <dd>
+          <span>{{ commandeProduit.prixRestant }}</span>
+        </dd>
+        <dt><span jhiTranslate="pressingApp.commandeProduit.status">Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'pressingApp.StatusCommandeProduit.' + commandeProduit.status }}">{{ commandeProduit.status }}</span>
+        </dd>
+        <dt><span jhiTranslate="pressingApp.commandeProduit.dateCommandeProduit">Date Commande Produit</span></dt>
+        <dd>
+          <span>{{ commandeProduit.dateCommandeProduit | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="pressingApp.commandeProduit.dateLastModified">Date Last Modified</span></dt>
+        <dd>
+          <span>{{ commandeProduit.dateLastModified | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="pressingApp.commandeProduit.produit">Produit</span></dt>
+        <dd>
+          <div *ngIf="commandeProduit.produit">
+            <a [routerLink]="['/produit', commandeProduit.produit?.id, 'view']">{{ commandeProduit.produit?.codeProduit }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="pressingApp.commandeProduit.client">Client</span></dt>
+        <dd>
+          <div *ngIf="commandeProduit.client">
+            <a [routerLink]="['/client', commandeProduit.client?.id, 'view']">{{ commandeProduit.client?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/commande-produit', commandeProduit.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+{
+  "name": "CommandeProduit",
+  "fields": [
+    {
+      "fieldName": "prixAvance",
+      "fieldType": "Double",
+      "javadoc": "fieldName"
+    },
+    {
+      "fieldName": "prixRestant",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "StatusCommandeProduit",
+      "fieldValues": "PAYER,NONPAYER,RESTEAPAYER"
+    },
+    {
+      "fieldName": "dateCommandeProduit",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateLastModified",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "produit",
+      "otherEntityRelationshipName": "commandeProduit",
+      "relationshipName": "produit",
+      "otherEntityField": "codeProduit"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "client",
+      "otherEntityRelationshipName": "commandeProduit",
+      "relationshipName": "client"
+    }
+  ],
+  "javadoc": "The CommandeProduit entity.\\n@author Ndigue Sene",
+  "entityTableName": "commande_produit",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["Pressing"],
+  "changelogDate": "20210601231516"
+}

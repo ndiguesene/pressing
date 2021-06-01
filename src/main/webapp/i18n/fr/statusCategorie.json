@@ -1,0 +1,10 @@
+{
+  "pressingApp": {
+    "StatusCategorie": {
+      "null": "",
+      "VALABLE": "VALABLE",
+      "RESTREINT": "RESTREINT",
+      "DESACTIVER": "DESACTIVER"
+    }
+  }
+}

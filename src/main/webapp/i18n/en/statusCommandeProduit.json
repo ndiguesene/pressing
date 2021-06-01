@@ -1,0 +1,10 @@
+{
+  "pressingApp": {
+    "StatusCommandeProduit": {
+      "null": "",
+      "PAYER": "PAYER",
+      "NONPAYER": "NONPAYER",
+      "RESTEAPAYER": "RESTEAPAYER"
+    }
+  }
+}
