@@ -29,14 +29,25 @@
             <column name="date_last_modified" type="date">
                 <constraints nullable="true" />
             </column>
-            <column name="produit_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <column name="client_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
+    </changeSet>
+
+    <changeSet id="20210601231516-1-relations" author="jhipster">
+
+        <createTable tableName="rel_commande_produit__produit">
+            <column name="produit_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="commande_produit_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="commande_produit_id, produit_id" tableName="rel_commande_produit__produit"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->

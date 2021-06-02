@@ -40,7 +40,7 @@ public class Client implements Serializable {
 
     @OneToMany(mappedBy = "client")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "produit", "client" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "produits", "client" }, allowSetters = true)
     private Set<CommandeProduit> commandeProduits = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

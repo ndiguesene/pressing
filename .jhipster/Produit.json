@@ -34,6 +34,13 @@
       "otherEntityName": "categorie",
       "otherEntityRelationshipName": "produit",
       "relationshipName": "categorie"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "commandeProduit",
+      "otherEntityRelationshipName": "produit",
+      "relationshipName": "commandeProduit",
+      "ownerSide": false
     }
   ],
   "javadoc": "The Produit entity.\\n@author Ndigue Sene",

@@ -5,6 +5,8 @@ import com.store.pressing.domain.enumeration.Taille;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -55,6 +57,11 @@ public class Produit implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties(value = { "produits" }, allowSetters = true)
     private Categorie categorie;
+
+    @ManyToMany(mappedBy = "produits")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "produits", "client" }, allowSetters = true)
+    private Set<CommandeProduit> commandeProduits = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -159,6 +166,37 @@ public class Produit implements Serializable {
 
     public void setCategorie(Categorie categorie) {
         this.categorie = categorie;
+    }
+
+    public Set<CommandeProduit> getCommandeProduits() {
+        return this.commandeProduits;
+    }
+
+    public Produit commandeProduits(Set<CommandeProduit> commandeProduits) {
+        this.setCommandeProduits(commandeProduits);
+        return this;
+    }
+
+    public Produit addCommandeProduit(CommandeProduit commandeProduit) {
+        this.commandeProduits.add(commandeProduit);
+        commandeProduit.getProduits().add(this);
+        return this;
+    }
+
+    public Produit removeCommandeProduit(CommandeProduit commandeProduit) {
+        this.commandeProduits.remove(commandeProduit);
+        commandeProduit.getProduits().remove(this);
+        return this;
+    }
+
+    public void setCommandeProduits(Set<CommandeProduit> commandeProduits) {
+        if (this.commandeProduits != null) {
+            this.commandeProduits.forEach(i -> i.removeProduit(this));
+        }
+        if (commandeProduits != null) {
+            commandeProduits.forEach(i -> i.addProduit(this));
+        }
+        this.commandeProduits = commandeProduits;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

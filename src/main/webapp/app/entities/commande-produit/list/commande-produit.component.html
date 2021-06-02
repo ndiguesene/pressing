@@ -54,9 +54,10 @@
           <td>{{ commandeProduit.dateCommandeProduit | formatMediumDate }}</td>
           <td>{{ commandeProduit.dateLastModified | formatMediumDate }}</td>
           <td>
-            <div *ngIf="commandeProduit.produit">
-              <a [routerLink]="['/produit', commandeProduit.produit?.id, 'view']">{{ commandeProduit.produit?.codeProduit }}</a>
-            </div>
+            <span *ngFor="let produit of commandeProduit.produits; let last = last">
+              <a class="form-control-static" [routerLink]="['/produit', produit.id, 'view']">{{ produit.codeProduit }}</a
+              >{{ last ? '' : ', ' }}
+            </span>
           </td>
           <td>
             <div *ngIf="commandeProduit.client">

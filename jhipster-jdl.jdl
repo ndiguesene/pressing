@@ -87,10 +87,10 @@ relationship OneToMany {
 }
 
 /**
- * Many to Many relationship.
+ * Many to One relationship.
  */
-relationship ManyToOne {
-    CommandeProduit{produit(codeProduit)} to Produit
+relationship ManyToMany {
+    CommandeProduit{produit(codeProduit)} to Produit{commandeProduit}
 }
 
 service * with serviceClass

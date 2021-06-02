@@ -10,7 +10,7 @@ export interface ICommandeProduit {
   status?: StatusCommandeProduit | null;
   dateCommandeProduit?: dayjs.Dayjs | null;
   dateLastModified?: dayjs.Dayjs | null;
-  produit?: IProduit | null;
+  produits?: IProduit[] | null;
   client?: IClient | null;
 }
 
@@ -22,7 +22,7 @@ export class CommandeProduit implements ICommandeProduit {
     public status?: StatusCommandeProduit | null,
     public dateCommandeProduit?: dayjs.Dayjs | null,
     public dateLastModified?: dayjs.Dayjs | null,
-    public produit?: IProduit | null,
+    public produits?: IProduit[] | null,
     public client?: IClient | null
   ) {}
 }

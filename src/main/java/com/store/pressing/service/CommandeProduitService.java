@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,7 +80,16 @@ public class CommandeProduitService {
     @Transactional(readOnly = true)
     public List<CommandeProduit> findAll() {
         log.debug("Request to get all CommandeProduits");
-        return commandeProduitRepository.findAll();
+        return commandeProduitRepository.findAllWithEagerRelationships();
+    }
+
+    /**
+     * Get all the commandeProduits with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<CommandeProduit> findAllWithEagerRelationships(Pageable pageable) {
+        return commandeProduitRepository.findAllWithEagerRelationships(pageable);
     }
 
     /**
@@ -90,7 +101,7 @@ public class CommandeProduitService {
     @Transactional(readOnly = true)
     public Optional<CommandeProduit> findOne(Long id) {
         log.debug("Request to get CommandeProduit : {}", id);
-        return commandeProduitRepository.findById(id);
+        return commandeProduitRepository.findOneWithEagerRelationships(id);
     }
 
     /**

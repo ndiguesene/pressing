@@ -133,10 +133,11 @@ public class CommandeProduitResource {
     /**
      * {@code GET  /commande-produits} : get all the commandeProduits.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of commandeProduits in body.
      */
     @GetMapping("/commande-produits")
-    public List<CommandeProduit> getAllCommandeProduits() {
+    public List<CommandeProduit> getAllCommandeProduits(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all CommandeProduits");
         return commandeProduitService.findAll();
     }

@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -45,9 +47,15 @@ public class CommandeProduit implements Serializable {
     @Column(name = "date_last_modified")
     private LocalDate dateLastModified;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "categorie" }, allowSetters = true)
-    private Produit produit;
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JoinTable(
+        name = "rel_commande_produit__produit",
+        joinColumns = @JoinColumn(name = "commande_produit_id"),
+        inverseJoinColumns = @JoinColumn(name = "produit_id")
+    )
+    @JsonIgnoreProperties(value = { "categorie", "commandeProduits" }, allowSetters = true)
+    private Set<Produit> produits = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "user", "commandeProduits" }, allowSetters = true)
@@ -132,17 +140,29 @@ public class CommandeProduit implements Serializable {
         this.dateLastModified = dateLastModified;
     }
 
-    public Produit getProduit() {
-        return this.produit;
+    public Set<Produit> getProduits() {
+        return this.produits;
     }
 
-    public CommandeProduit produit(Produit produit) {
-        this.setProduit(produit);
+    public CommandeProduit produits(Set<Produit> produits) {
+        this.setProduits(produits);
         return this;
     }
 
-    public void setProduit(Produit produit) {
-        this.produit = produit;
+    public CommandeProduit addProduit(Produit produit) {
+        this.produits.add(produit);
+        produit.getCommandeProduits().add(this);
+        return this;
+    }
+
+    public CommandeProduit removeProduit(Produit produit) {
+        this.produits.remove(produit);
+        produit.getCommandeProduits().remove(this);
+        return this;
+    }
+
+    public void setProduits(Set<Produit> produits) {
+        this.produits = produits;
     }
 
     public Client getClient() {

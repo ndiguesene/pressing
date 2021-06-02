@@ -42,9 +42,10 @@
         </dd>
         <dt><span jhiTranslate="pressingApp.commandeProduit.produit">Produit</span></dt>
         <dd>
-          <div *ngIf="commandeProduit.produit">
-            <a [routerLink]="['/produit', commandeProduit.produit?.id, 'view']">{{ commandeProduit.produit?.codeProduit }}</a>
-          </div>
+          <span *ngFor="let produit of commandeProduit.produits; let last = last">
+            <a [routerLink]="['/produit', produit?.id, 'view']">{{ produit.codeProduit }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
         </dd>
         <dt><span jhiTranslate="pressingApp.commandeProduit.client">Client</span></dt>
         <dd>

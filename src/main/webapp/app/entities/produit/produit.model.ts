@@ -1,4 +1,5 @@
 import { ICategorie } from 'app/entities/categorie/categorie.model';
+import { ICommandeProduit } from 'app/entities/commande-produit/commande-produit.model';
 import { Taille } from 'app/entities/enumerations/taille.model';
 
 export interface IProduit {
@@ -10,6 +11,7 @@ export interface IProduit {
   imageContentType?: string | null;
   image?: string | null;
   categorie?: ICategorie | null;
+  commandeProduits?: ICommandeProduit[] | null;
 }
 
 export class Produit implements IProduit {
@@ -21,7 +23,8 @@ export class Produit implements IProduit {
     public tailleProduit?: Taille,
     public imageContentType?: string | null,
     public image?: string | null,
-    public categorie?: ICategorie | null
+    public categorie?: ICategorie | null,
+    public commandeProduits?: ICommandeProduit[] | null
   ) {}
 }
 

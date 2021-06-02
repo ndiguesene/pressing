@@ -29,7 +29,7 @@ export class CommandeProduitUpdateComponent implements OnInit {
     status: [],
     dateCommandeProduit: [],
     dateLastModified: [],
-    produit: [],
+    produits: [],
     client: [],
   });
 
@@ -71,6 +71,17 @@ export class CommandeProduitUpdateComponent implements OnInit {
     return item.id!;
   }
 
+  getSelectedProduit(option: IProduit, selectedVals?: IProduit[]): IProduit {
+    if (selectedVals) {
+      for (const selectedVal of selectedVals) {
+        if (option.id === selectedVal.id) {
+          return selectedVal;
+        }
+      }
+    }
+    return option;
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ICommandeProduit>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
       () => this.onSaveSuccess(),
@@ -98,13 +109,13 @@ export class CommandeProduitUpdateComponent implements OnInit {
       status: commandeProduit.status,
       dateCommandeProduit: commandeProduit.dateCommandeProduit,
       dateLastModified: commandeProduit.dateLastModified,
-      produit: commandeProduit.produit,
+      produits: commandeProduit.produits,
       client: commandeProduit.client,
     });
 
     this.produitsSharedCollection = this.produitService.addProduitToCollectionIfMissing(
       this.produitsSharedCollection,
-      commandeProduit.produit
+      ...(commandeProduit.produits ?? [])
     );
     this.clientsSharedCollection = this.clientService.addClientToCollectionIfMissing(this.clientsSharedCollection, commandeProduit.client);
   }
@@ -114,7 +125,9 @@ export class CommandeProduitUpdateComponent implements OnInit {
       .query()
       .pipe(map((res: HttpResponse<IProduit[]>) => res.body ?? []))
       .pipe(
-        map((produits: IProduit[]) => this.produitService.addProduitToCollectionIfMissing(produits, this.editForm.get('produit')!.value))
+        map((produits: IProduit[]) =>
+          this.produitService.addProduitToCollectionIfMissing(produits, ...(this.editForm.get('produits')!.value ?? []))
+        )
       )
       .subscribe((produits: IProduit[]) => (this.produitsSharedCollection = produits));
 
@@ -134,7 +147,7 @@ export class CommandeProduitUpdateComponent implements OnInit {
       status: this.editForm.get(['status'])!.value,
       dateCommandeProduit: this.editForm.get(['dateCommandeProduit'])!.value,
       dateLastModified: this.editForm.get(['dateLastModified'])!.value,
-      produit: this.editForm.get(['produit'])!.value,
+      produits: this.editForm.get(['produits'])!.value,
       client: this.editForm.get(['client'])!.value,
     };
   }

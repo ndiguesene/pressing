@@ -26,11 +26,12 @@
   ],
   "relationships": [
     {
-      "relationshipType": "many-to-one",
+      "relationshipType": "many-to-many",
       "otherEntityName": "produit",
       "otherEntityRelationshipName": "commandeProduit",
       "relationshipName": "produit",
-      "otherEntityField": "codeProduit"
+      "otherEntityField": "codeProduit",
+      "ownerSide": true
     },
     {
       "relationshipType": "many-to-one",

@@ -2,6 +2,7 @@ package com.store.pressing.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -9,16 +10,23 @@ import com.store.pressing.IntegrationTest;
 import com.store.pressing.domain.CommandeProduit;
 import com.store.pressing.domain.enumeration.StatusCommandeProduit;
 import com.store.pressing.repository.CommandeProduitRepository;
+import com.store.pressing.service.CommandeProduitService;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link CommandeProduitResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class CommandeProduitResourceIT {
@@ -55,6 +64,12 @@ class CommandeProduitResourceIT {
 
     @Autowired
     private CommandeProduitRepository commandeProduitRepository;
+
+    @Mock
+    private CommandeProduitRepository commandeProduitRepositoryMock;
+
+    @Mock
+    private CommandeProduitService commandeProduitServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -160,6 +175,24 @@ class CommandeProduitResourceIT {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].dateCommandeProduit").value(hasItem(DEFAULT_DATE_COMMANDE_PRODUIT.toString())))
             .andExpect(jsonPath("$.[*].dateLastModified").value(hasItem(DEFAULT_DATE_LAST_MODIFIED.toString())));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllCommandeProduitsWithEagerRelationshipsIsEnabled() throws Exception {
+        when(commandeProduitServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restCommandeProduitMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(commandeProduitServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllCommandeProduitsWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(commandeProduitServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restCommandeProduitMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(commandeProduitServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test

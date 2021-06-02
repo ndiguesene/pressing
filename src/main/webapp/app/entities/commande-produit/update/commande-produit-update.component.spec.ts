@@ -46,12 +46,12 @@ describe('Component Tests', () => {
     describe('ngOnInit', () => {
       it('Should call Produit query and add missing value', () => {
         const commandeProduit: ICommandeProduit = { id: 456 };
-        const produit: IProduit = { id: 27301 };
-        commandeProduit.produit = produit;
+        const produits: IProduit[] = [{ id: 27301 }];
+        commandeProduit.produits = produits;
 
         const produitCollection: IProduit[] = [{ id: 70855 }];
         spyOn(produitService, 'query').and.returnValue(of(new HttpResponse({ body: produitCollection })));
-        const additionalProduits = [produit];
+        const additionalProduits = [...produits];
         const expectedCollection: IProduit[] = [...additionalProduits, ...produitCollection];
         spyOn(produitService, 'addProduitToCollectionIfMissing').and.returnValue(expectedCollection);
 
@@ -84,8 +84,8 @@ describe('Component Tests', () => {
 
       it('Should update editForm', () => {
         const commandeProduit: ICommandeProduit = { id: 456 };
-        const produit: IProduit = { id: 1822 };
-        commandeProduit.produit = produit;
+        const produits: IProduit = { id: 1822 };
+        commandeProduit.produits = [produits];
         const client: IClient = { id: 65506 };
         commandeProduit.client = client;
 
@@ -93,7 +93,7 @@ describe('Component Tests', () => {
         comp.ngOnInit();
 
         expect(comp.editForm.value).toEqual(expect.objectContaining(commandeProduit));
-        expect(comp.produitsSharedCollection).toContain(produit);
+        expect(comp.produitsSharedCollection).toContain(produits);
         expect(comp.clientsSharedCollection).toContain(client);
       });
     });
@@ -176,6 +176,34 @@ describe('Component Tests', () => {
           const entity = { id: 123 };
           const trackResult = comp.trackClientById(0, entity);
           expect(trackResult).toEqual(entity.id);
+        });
+      });
+    });
+
+    describe('Getting selected relationships', () => {
+      describe('getSelectedProduit', () => {
+        it('Should return option if no Produit is selected', () => {
+          const option = { id: 123 };
+          const result = comp.getSelectedProduit(option);
+          expect(result === option).toEqual(true);
+        });
+
+        it('Should return selected Produit for according option', () => {
+          const option = { id: 123 };
+          const selected = { id: 123 };
+          const selected2 = { id: 456 };
+          const result = comp.getSelectedProduit(option, [selected2, selected]);
+          expect(result === selected).toEqual(true);
+          expect(result === selected2).toEqual(false);
+          expect(result === option).toEqual(false);
+        });
+
+        it('Should return option if this Produit is not selected', () => {
+          const option = { id: 123 };
+          const selected = { id: 456 };
+          const result = comp.getSelectedProduit(option, [selected]);
+          expect(result === option).toEqual(true);
+          expect(result === selected).toEqual(false);
         });
       });
     });

@@ -24,6 +24,7 @@
       "tailleProduit": "Taille Produit",
       "image": "Image",
       "categorie": "Categorie",
+      "commandeProduit": "Commande Produit",
       "help": {
         "designation": "fieldName"
       }
