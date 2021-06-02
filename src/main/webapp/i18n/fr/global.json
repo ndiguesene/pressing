@@ -6,11 +6,11 @@
       "home": "Accueil",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
-        "main": "Entités",
+        "main": "Gestion",
         "client": "Client",
         "produit": "Produit",
         "categorie": "Categorie",
-        "commandeProduit": "Commande Produit",
+        "commandeProduit": "Passer Commande",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

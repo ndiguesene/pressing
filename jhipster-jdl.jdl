@@ -23,10 +23,10 @@ enum Taille {
     S, M, L, XL, XXL
 }
 enum StatusCommandeProduit {
-   PAYER, NONPAYER, RESTEAPAYER
+   PAYER, RESTEAPAYER
 }
 enum StatusCategorie {
-    VALABLE, RESTREINT, DESACTIVER
+    VALABLE, DESACTIVER
 }
 
 

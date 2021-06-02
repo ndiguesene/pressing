@@ -1,8 +1,8 @@
 <nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-dark">
   <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
-    <span class="logo-img"></span>
+    <!--    <span class="logo-img"></span>-->
     <span jhiTranslate="global.title" class="navbar-title">Pressing</span>
-    <span class="navbar-version">{{ version }}</span>
+    <!--    <span class="navbar-version">{{ version }}</span>-->
   </a>
   <a
     class="navbar-toggler d-lg-none"
@@ -18,14 +18,40 @@
   </a>
   <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <!--<li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
           <span>
             <fa-icon icon="home"></fa-icon>
             <span jhiTranslate="global.menu.home">Home</span>
           </span>
         </a>
+      </li>-->
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a
+          routerLink="commande-produit"
+          (click)="collapseNavbar()"
+          class="btn btn-primary btn-group-sm"
+          tabindex="-1"
+          role="button"
+          aria-disabled="true"
+        >
+          <span>
+            <fa-icon icon="shopping-cart"></fa-icon>
+            <span jhiTranslate="global.menu.entities.commandeProduit">Passer Commande</span>
+          </span>
+        </a>
       </li>
+      <!--<li>
+        <a
+          class="dropdown-item"
+          routerLink="commande-produit"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="collapseNavbar()"
+        >
+          <span jhiTranslate="global.menu.entities.commandeProduit">Passer Commande</span>
+        </a>
+      </li>-->
       <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
       <li
         *ngSwitchCase="true"
@@ -38,7 +64,7 @@
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
           <span>
             <fa-icon icon="th-list"></fa-icon>
-            <span jhiTranslate="global.menu.entities.main">Entities</span>
+            <span jhiTranslate="global.menu.entities.main">Gestion</span>
           </span>
         </a>
         <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
@@ -78,7 +104,7 @@
               <span jhiTranslate="global.menu.entities.categorie">Categorie</span>
             </a>
           </li>
-          <li>
+          <!--<li>
             <a
               class="dropdown-item"
               routerLink="commande-produit"
@@ -89,7 +115,7 @@
               <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
               <span jhiTranslate="global.menu.entities.commandeProduit">Commande Produit</span>
             </a>
-          </li>
+          </li>-->
           <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
         </ul>
       </li>
